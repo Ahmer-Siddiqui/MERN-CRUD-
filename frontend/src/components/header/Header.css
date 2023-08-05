@@ -1,0 +1,12 @@
+#header{
+    border: 1px solid black;
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 900;
+    border-radius: 0px 0px 30px 30px;
+    margin-bottom: 20px;
+}
