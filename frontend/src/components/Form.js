@@ -20,6 +20,9 @@ const MyForm = () => {
     userName: "",
     gmail: "",
     phoneNumber: "",
+    fileName: "",
+    fileSize: "",
+    fileURL: "",
   });
 
   useEffect(() => {
@@ -43,9 +46,27 @@ const MyForm = () => {
       [name]: value,
     });
   };
+  const onChangeFileHandler = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function (event) {
+      setFormData({
+        ...formData,
+        fileName: file.name,
+        fileSize: file.size,
+        fileURL: event.target.result,
+      });
+    };
+
+    reader.readAsDataURL(file);
+
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    console.log(formData);
     if (id.id) {
       dispatch(updateMyForm(formData));
     } else {
@@ -91,7 +112,22 @@ const MyForm = () => {
                 required
                 onChange={onChangeHandler}
               />
+             
             </Form.Group>
+
+            <Form.Label>File</Form.Label>
+              <br /> <br />
+              <Form.Control
+                type="file"
+                hidden
+                id="filee"
+                onChange={onChangeFileHandler}
+              />
+              
+              <label htmlFor="filee">
+              {formData.fileName ? formData.fileName : "no file here" }</label> <br /> <br /> <br />
+              <img src={formData.fileURL} width="100px" alt="" /> <br /> <br />
+              {/* <video src={formData.fileURL} controls width="1000px"  muted></video> */}
 
             <Button variant="primary" type="submit">
               Submit
@@ -99,53 +135,6 @@ const MyForm = () => {
           </Form>
         </div>
       </div>
-      {/* {checkUpdate ? (
-        <div>
-          <Header header={"Updated Form"} />
-          <div className="container">
-            <Form onSubmit={onSubmitHandler}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>User Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="UserName"
-                  name="userName"
-                  required
-                  onChange={onChangeHandler}
-                  value={newEditData.userName}
-                />
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  name="gmail"
-                  value={newEditData.gmail}
-                  required
-                  onChange={onChangeHandler}
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label>Phone Number</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Phone Number"
-                  name="phoneNumber"
-                  value={newEditData.phoneNumber}
-                  required
-                  onChange={onChangeHandler}
-                />
-              </Form.Group>
-
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </div>
-        </div>
-      ) : ( */}
-
-      {/* )} */}
     </>
   );
 };

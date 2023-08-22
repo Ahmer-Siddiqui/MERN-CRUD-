@@ -1,12 +1,12 @@
 const mongoose = require('mongoose'); 
-
+const mongoConn = require("dotenv").config()
 const connectDb = async ()=>{
    try {
-      const conn =  await mongoose.connect("mongodb://127.0.0.1:27017/demo")
+      const conn =  await mongoose.connect(mongoConn.parsed.mongoURL)
       console.log(`Database is connected`);
    } catch (error) {
-      console.log(error)
-      process.exit(1)
+      console.log(error);
+      process.exit(1);
    }
 
 }
